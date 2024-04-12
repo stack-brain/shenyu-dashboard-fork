@@ -16,7 +16,7 @@ const modelNotExisted = (app, model) =>
 const dynamicWrapper = (app, models, component) => {
   // register models
   models.forEach(model => {
-    if (modelNotExisted(app, model)) {
+    if (modelNotExisted(app, model)) {     
       // eslint-disable-next-line
       app.model(require(`../models/${model}`).default);
     }
@@ -79,6 +79,9 @@ export const getRouterData = app => {
     },
     '/plug/hystrix': {
       component: dynamicWrapper(app, ['hystrix'], () => import('../routes/Plugin/Hystrix')),
+    },
+    '/plug/request': {
+      component: dynamicWrapper(app, ['request'], () => import('../routes/Plugin/Request')),
     },
     '/plug/:id': {
       component: dynamicWrapper(app, ['common'], () => import('../routes/Plugin/Common')),
