@@ -151,6 +151,25 @@ class AddModal extends Component {
     })
   }
 
+  
+  handleTypeChange = (val, type, rowIndex) => {
+    // eslint-disable-next-line react/no-access-state-in-setstate
+    let list = this.state[`${type}List`];
+    if (val.startsWith("replace")) {
+      list[rowIndex][1].fieldLabel = getIntlContent(`SOUL.PLUGIN.REQUEST.${type.toUpperCase()}.OLD.KEY`);
+      list[rowIndex][2].fieldLabel = getIntlContent(`SOUL.PLUGIN.REQUEST.${type.toUpperCase()}.NEW.KEY`);
+    } else if (val.startsWith("remove")) {
+      list[rowIndex][1].fieldLabel = getIntlContent(`SOUL.PLUGIN.REQUEST.${type.toUpperCase()}.KEY`);
+      list[rowIndex][2].fieldLabel = getIntlContent(`SOUL.PLUGIN.REQUEST.${type.toUpperCase()}.KEY`);
+    } else {
+      list[rowIndex][1].fieldLabel = getIntlContent(`SOUL.PLUGIN.REQUEST.${type.toUpperCase()}.KEY`);
+      list[rowIndex][2].fieldLabel = getIntlContent(`SOUL.PLUGIN.REQUEST.${type.toUpperCase()}.VALUE`);
+    }
+    this.setState({
+      [`${type}List`]: list
+    })
+  }
+
   initList = (props) => {
     let handle = props.handle && JSON.parse(props.handle);
     this.state.parameterList = this.initListByType(handle, "parameter");
